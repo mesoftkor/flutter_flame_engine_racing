@@ -1,16 +1,10 @@
-# flutter_flame_engine
+유데미 라이브 세션 진행 코드
 
-A new Flutter project.
+6년차 현직 개발자가 알려주는 플러터 개발의 모든 것
 
-## Getting Started
+https://gamma.app/docs/6--h3a5rjqu036180k?mode=doc
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Animation](https://github.com/mesoftkor/flutter_flame_engine_racing/assets/56785952/756cf59a-dd87-425a-b2f9-6941fb786d79)
