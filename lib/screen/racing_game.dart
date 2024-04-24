@@ -1,13 +1,12 @@
-import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
-import 'package:flame/text.dart';
 import 'package:flame_audio/flame_audio.dart';
-import 'package:flutter_flame_engine/components/obstacle.dart';
+import '../components/obstacle.dart';
+import 'package:flame/text.dart';
 
 import '../components/life_heart.dart';
 import '../components/move_button.dart';
@@ -65,7 +64,7 @@ class RacingGame extends FlameGame with TapCallbacks, HasCollisionDetection {
     scoreText = TextComponent(
       text: '0',
       textRenderer: TextPaint(
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 32,
           color: Color(0xff000000),
           fontWeight: FontWeight.bold,
@@ -132,12 +131,14 @@ class RacingGame extends FlameGame with TapCallbacks, HasCollisionDetection {
       //게임 오버 상황일때만 내부 로직 수행
       onGameOver.call();
     }
+    super.onTapUp(event);
   }
 
   @override
   void update(double dt) {
     super.update(dt);
 
+    /// 장애물 랜덤 생성
     nextSpawnseconds -= dt;
     if (nextSpawnseconds < 0) {
       add(Obstacle(
@@ -166,6 +167,7 @@ class RacingGame extends FlameGame with TapCallbacks, HasCollisionDetection {
           player.position.x <= 30 ? player.position.x : player.x - 7,
           player.position.y);
     } else {
+      //아무것도 하지 않으면 정지상황
       player.position = Vector2(player.position.x, player.position.y);
     }
   }
@@ -180,23 +182,29 @@ class RacingGame extends FlameGame with TapCallbacks, HasCollisionDetection {
       return;
     }
 
-    // 게임 오버(게임오버 텍스트 표시)
-    add(TextComponent(
-      text: 'GAME OVER\nTouch To Main',
-      textRenderer: TextPaint(
-        style: const TextStyle(
-          fontSize: 32,
-          color: Color(0xff000000),
-          fontWeight: FontWeight.bold,
+    // 게임 오버 (게임오버 텍스트 표시 !)
+    add(
+      TextComponent(
+        text: 'GAME OVER\nTouch To Main',
+        textRenderer: TextPaint(
+          style: TextStyle(
+            fontSize: 32,
+            color: Color(0xff000000),
+            fontWeight: FontWeight.bold,
+          ),
         ),
+        anchor: Anchor.center,
+        position: Vector2(size.x / 2, size.y / 2),
       ),
-      anchor: Anchor.center,
-      position: Vector2(size.x / 2, size.y / 2),
-    ));
-    //0.5초 지연후 일시정지
-    Future.delayed(const Duration(microseconds: 500), () {
-      paused = true;
-    });
+    );
+
+    // 일정 딜레이 이후에 일시정지
+    Future.delayed(
+      Duration(milliseconds: 500),
+      () {
+        paused = true;
+      },
+    );
   }
 
   void startBgmMusic() {
